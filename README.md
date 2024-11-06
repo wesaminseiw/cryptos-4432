@@ -1,4 +1,4 @@
-# {{PROJECT_NAME}}
+# Cryptos
 
 ## Project Structure
 
@@ -13,6 +13,6 @@
 
 ## GitHub Repository
 
-- **{{GITHUB_REPO}}**
+- **https://github.com/wesaminseiw/cryptos-4432.git**
 
 
