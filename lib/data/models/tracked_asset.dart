@@ -15,4 +15,7 @@ class TrackedAsset {
     data['amount'] = amount;
     return data;
   }
+
+  @override
+  String toString() => 'TrackedAsset(name: $name, amount: $amount)';
 }

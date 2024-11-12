@@ -1,17 +1,22 @@
-import 'package:flutter/material.dart';
+import 'utils/constants.dart';
 import '../presentation/screens/home_screen.dart';
+import 'package:get/get.dart';
 
 class AppRouter {
-  Route onGenerateRoute(RouteSettings routeSettings) {
-    switch (routeSettings.name) {
-      case '/home':
-        return MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
-        );
-      default:
-        return MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
-        );
-    }
+  //* routes defining
+  static final List<GetPage> routes = [
+    GetPage(
+      name: homeRoute,
+      page: () => const HomeScreen(),
+    ),
+  ];
+
+  //* navigators
+  static void toHome() {
+    Get.toNamed(homeRoute);
+  }
+
+  static void back() {
+    Get.back();
   }
 }
