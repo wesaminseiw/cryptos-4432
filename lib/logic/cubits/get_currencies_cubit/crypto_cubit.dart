@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:cryptos/app/services/http_service.dart';
@@ -6,6 +7,7 @@ import 'package:cryptos/data/models/coin_data.dart';
 import 'package:cryptos/data/models/tracked_asset.dart';
 import 'package:flutter/foundation.dart' show immutable;
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'crypto_state.dart';
 
@@ -70,7 +72,16 @@ class CryptoCubit extends Cubit<CryptoState> {
     try {
       double _amount = double.parse(amount);
       // Add the new tracked asset to the persistent list
-      _trackedAssets.add(TrackedAsset(name: name, amount: _amount));
+      _trackedAssets.add(
+        TrackedAsset(
+          name: name,
+          amount: _amount,
+        ),
+      );
+      List<String> data = _trackedAssets.map((asset) => jsonEncode(asset)).toList();
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setStringList('tracked_assets', data);
+
       log('addTrackedAsset() - Tracked assets: ${_trackedAssets.map((asset) => asset.toString()).join(', ')}');
 
       // Emit success state with a new list, not a reference
@@ -81,6 +92,28 @@ class CryptoCubit extends Cubit<CryptoState> {
     } catch (e) {
       log('addTrackedAsset() - Error: $e');
       emit(AddTrackedAssetFailureState(e: e.toString()));
+    }
+  }
+
+  void loadTrackedAssetsFromStorage() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? data = prefs.getStringList('tracked_assets');
+
+    emit(LoadTrackedAssetsLoadingState(trackedAssets: const []));
+    try {
+      if (data != null) {
+        _trackedAssets = data.map((element) => TrackedAsset.fromJson(jsonDecode(element))).toList();
+        emit(LoadTrackedAssetsSuccessState(trackedAssets: _trackedAssets));
+      } else {
+        emit(LoadTrackedAssetsEmptyState(trackedAssets: const []));
+      }
+    } catch (e) {
+      emit(
+        LoadTrackedAssetsFailureState(
+          e: e.toString(),
+          trackedAssets: const [],
+        ),
+      );
     }
   }
 

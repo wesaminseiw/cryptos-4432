@@ -4,7 +4,7 @@ import 'package:cryptos/app/router.dart';
 import 'package:cryptos/app/utils/extensions.dart';
 import 'package:cryptos/logic/cubits/get_currencies_cubit/crypto_cubit.dart';
 import 'package:cryptos/presentation/styles/colors.dart';
-import 'package:cryptos/presentation/widgets/build_add_asset_dialog_ui.dart';
+import 'package:cryptos/presentation/widgets/build_ui/build_add_asset_dialog_ui.dart';
 import 'package:cryptos/presentation/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

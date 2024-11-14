@@ -26,6 +26,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (context) => CryptoCubit()
             ..getAssets()
+            ..loadTrackedAssetsFromStorage()
             ..getPortfolioValue(),
         ),
       ],

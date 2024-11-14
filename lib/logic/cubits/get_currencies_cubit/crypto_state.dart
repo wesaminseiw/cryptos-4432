@@ -92,7 +92,7 @@ final class RefreshFailureState extends CryptoState {
   });
 }
 
-//* track asset states
+//* add track asset states
 final class AddTrackedAssetLoadingState extends CryptoState {
   const AddTrackedAssetLoadingState({
     super.trackedAssets,
@@ -109,6 +109,36 @@ final class AddTrackedAssetSuccessState extends CryptoState {
 
 final class AddTrackedAssetFailureState extends CryptoState {
   const AddTrackedAssetFailureState({
+    required super.e,
+    super.isLoading = false,
+    super.trackedAssets,
+  });
+}
+
+//* load track assets states
+final class LoadTrackedAssetsLoadingState extends CryptoState {
+  const LoadTrackedAssetsLoadingState({
+    super.trackedAssets,
+    super.isLoading = true,
+  });
+}
+
+final class LoadTrackedAssetsSuccessState extends CryptoState {
+  const LoadTrackedAssetsSuccessState({
+    required super.trackedAssets,
+    super.isLoading = false,
+  });
+}
+
+final class LoadTrackedAssetsEmptyState extends CryptoState {
+  const LoadTrackedAssetsEmptyState({
+    super.isLoading = false,
+    super.trackedAssets,
+  });
+}
+
+final class LoadTrackedAssetsFailureState extends CryptoState {
+  const LoadTrackedAssetsFailureState({
     required super.e,
     super.isLoading = false,
     super.trackedAssets,
